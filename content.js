@@ -351,7 +351,7 @@ var underline = document.createElement("IMG");
 	elementWidth.id = "new";
 	elementWidth.type ="range";
 	elementWidth.max ="100";
-	elementWidth.min ="0";
+	elementWidth.min ="-100";
 	elementWidth.step ="1";
  elementWidth.setAttribute("style"," width:60px; height:35px; position: absolute;top:0px; left:960px; ");
    elementWidth.addEventListener("change",elementWidthButton,false);
@@ -360,10 +360,59 @@ var underline = document.createElement("IMG");
 	elementHeight.id = "new";
 	elementHeight.type ="range";
 	elementHeight.max ="100";
-	elementHeight.min ="0";
+	elementHeight.min ="-100";
 	elementHeight.step ="1";
    elementHeight.setAttribute("style"," width:60px; height:35px; position: absolute;top:0px; left:1000px; ");
     elementHeight.addEventListener("change",elementHeightButton,false);
+	
+	
+	var relative = document.createElement("Label");
+	relative.id = "new";
+	relative.setAttribute("style"," width:55px; height:35px; position: absolute;top:40px; left:240px; ");
+    var txt = document.createTextNode("relative");
+	relative.appendChild(txt);
+	var relativeBox = document.createElement("input");
+	relativeBox .id = "new";
+	relativeBox .type ="radio";
+    relativeBox .setAttribute("style"," width:15px; height:15px; position: absolute;top:40px; left:200px; ");
+    relativeBox .addEventListener("change",position,false);
+	
+		var absolute = document.createElement("Label");
+	absolute.id = "new";
+	absolute.setAttribute("style"," width:55px; height:35px; position: absolute;top:40px; left:320px; ");
+    var txt = document.createTextNode("absolute");
+	absolute.appendChild(txt);
+	var absoluteBox = document.createElement("input");
+	absoluteBox .id = "new";
+	absoluteBox .type ="radio";
+    absoluteBox .setAttribute("style"," width:15px; height:15px; position: absolute;top:40px; left:280px; ");
+    absoluteBox .addEventListener("change",position,false);
+	
+		var staticpo = document.createElement("Label");
+	staticpo.id = "new";
+	staticpo.setAttribute("style"," width:55px; height:35px; position: absolute;top:40px; left:400px; ");
+    var txt = document.createTextNode("static");
+	staticpo.appendChild(txt);
+	var staticBox = document.createElement("input");
+	staticBox .id = "new";
+	staticBox .type ="radio";
+    staticBox .setAttribute("style"," width:15px; height:15px; position: absolute;top:40px; left:360px; ");
+    staticBox .addEventListener("change",position,false);
+	
+	var resetDef= document.createElement("input");
+resetDef.id = "new";
+	resetDef.type ="reset";
+   resetDef.setAttribute("style"," width:60px; height:20px; position: absolute;top:40px; left:450px; ");
+    resetDef.addEventListener("click",resetButton,false);
+
+		var move = document.createElement("IMG");
+    move.class = "editPanel";
+    move.src = "https://cdn3.iconfinder.com/data/icons/text/100/text_align_right-128.png";
+	move.setAttribute("style", "width:40px; height:25px; ");
+    move.addEventListener("click",moveButton,false);
+    move.setAttribute("style", "width:35px; height:35px; position: absolute;top:40px; left:500px; ");
+	
+	
 	
 cssMenu.appendChild(bgcolor);
 cssMenu.appendChild(border);
@@ -391,6 +440,14 @@ cssMenu.appendChild(borderColor);
 cssMenu.appendChild(borderType);
 cssMenu.appendChild(elementHeight);
 cssMenu.appendChild(elementWidth);
+cssMenu.appendChild(relativeBox);
+cssMenu.appendChild(relative);
+cssMenu.appendChild(absolute);
+cssMenu.appendChild(absoluteBox);
+cssMenu.appendChild(staticpo);
+cssMenu.appendChild(staticBox);
+cssMenu.appendChild(resetDef);
+cssMenu.appendChild(move);
 
 	
 var text = document.createElement("IMG");
@@ -516,6 +573,8 @@ htmlMenu.appendChild(img);
 	
 	var yourTarget;
 	
+		var prePosition ;	
+ 
 //document.addEventListener("mouseover",mouseOver, false);
  
 function changeTarget(){
@@ -544,6 +603,11 @@ function changeTarget(){
 		
 		//console.log(path[i]);
 	}
+
+if(	yourTarget.style.position == "")
+prePosition ="static";
+else 
+prePosition =yourTarget.style.position;
 	
 }
 
@@ -558,8 +622,10 @@ var clicked = false ;
 
 var path = new Array();
 
-document.onmousemove = function(e){
-	
+document.addEventListener("mousemove",mymoseMove,false);
+
+ function mymoseMove(e){
+	 console.log("here");
     cursorX = e.pageX;
     cursorY = e.pageY;
 var element = document.elementFromPoint(cursorX,cursorY);
@@ -986,6 +1052,102 @@ switch(selected) {
 function elementHeightButton(){
 	 yourTarget.style.height= this.value;
 	 }
+	 
+
+function position (e){
+
+	 switch(e.target) {
+    case relativeBox:
+	yourTarget.style.position ="relative";
+ absoluteBox.checked = false ;
+ staticBox.checked = false;
+        break;
+ case absoluteBox:
+ 	yourTarget.style.position ="absolute";
+ relativeBox.checked = false;
+ staticBox.checked= false;
+        break;
+case staticBox:
+	yourTarget.style.position ="static";
+ absoluteBox.checked = false;
+ relativeBox.checked = false;
+        break;
+	   default:
+}
+ 
+
+}
+
+function resetButton(){
+		//console.log(yourTarget.style.position);
+	yourTarget.style.position = prePosition;
+		//console.log(yourTarget.style.position);
+}
+
+function moveButton (){
+	
+dragElement(yourTarget);
+
+	
+}
+
+
+
+
+
+
+
+
+
+function dragElement(elmnt) {
+	
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+	move =false;
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+   document.onmouseup = null;
+   document.onmousemove = mymoseMove;
+  }
+	
+}
+
+
+
+
+
+
+
+
 
 
 
