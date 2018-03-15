@@ -1,27 +1,34 @@
  
- //z_index omitted
+
  
- function start(){
+ function start(){//called from background.js , when the extension icon clicked
 	
-
-
-var mainBG = document.createElement("Div");
+	
+var yourTarget;
+var cursorX;
+var cursorY;
+var clicked = false ;
+var borderType;
+var path = new Array();
+	
+//create html elements 
+var mainBG = document.createElement("Div");//append all elements to 
     mainBG.class = "editPanel";
 	mainBG.id = "main";
 	
-	var add = document.createElement("Button");
+	var add = document.createElement("Button");//to show html menu
         add.class = "editPanel";
 	    add.className = "cssbtns btn";
         add.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/finance-and-business-set2/32/fin32px080-16.png")';
 	mainBG.appendChild(add);
 	
-	var edit = document.createElement("Button");
+	var edit = document.createElement("Button");//to show css menu
         edit.class = "editPanel";
 	    edit.className = "cssbtns btn";
         edit.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/single-width-stroke/24/oui-icons-50-16.png")';
     mainBG.appendChild(edit);
     
-	var dlt = document.createElement("Button");
+	var dlt = document.createElement("Button");//to delete the element
         dlt.class = "editPanel";
 	    dlt.className = "cssbtns btn";
         dlt.style.backgroundImage = 'url("https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-70-16.png")';
@@ -30,17 +37,13 @@ var mainBG = document.createElement("Div");
     var space = document.createElement("Div");
         space.class = "editPanel";
         space.className = "space";
-		
 	mainBG.appendChild(space);
-	
 	
 	var selector = document.createElement("Button");
 	    selector.class = "editPanel";
         selector.className = "cssbtns btn";
 		selector.setAttribute("style","position:absolute; top :0px; left:110px; background-color:transparent;");
         selector.style.backgroundImage = 'url("https://cdn1.iconfinder.com/data/icons/line-essentials-84/20/4126-16.png")';
-
-	
 	mainBG.appendChild(selector);
 	
 	var space = document.createElement("Div");
@@ -53,21 +56,42 @@ var mainBG = document.createElement("Div");
         ancestors[0].class = "editPanel";
         ancestors[0].className = "ancestors";
 	mainBG.appendChild(ancestors[0]);
+		var arrow = document.createElement("Button");
+        arrow.class = "editPanel";
+	    arrow.className = "cssbtns btn";
+        arrow.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-b-16.png")';
+    mainBG.appendChild(arrow);
 	    ancestors[1] = document.createElement("Label");
         ancestors[1].class = "editPanel";
         ancestors[1].className = "ancestors";
 	mainBG.appendChild(ancestors[1]);
+		var arrow = document.createElement("Button");
+        arrow.class = "editPanel";
+	    arrow.className = "cssbtns btn";
+        arrow.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-b-16.png")';
+    mainBG.appendChild(arrow);
 		ancestors[2] = document.createElement("Label");
         ancestors[2].class = "editPanel";
         ancestors[2].className = "ancestors";
 	mainBG.appendChild(ancestors[2]);
+		var arrow = document.createElement("Button");
+        arrow.class = "editPanel";
+	    arrow.className = "cssbtns btn";
+        arrow.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-b-16.png")';
+    mainBG.appendChild(arrow);
 	    ancestors[3] = document.createElement("Label");
         ancestors[3].class = "editPanel";
         ancestors[3].className = "ancestors";
 	mainBG.appendChild(ancestors[3]);
+		var arrow = document.createElement("Button");
+        arrow.class = "editPanel";
+	    arrow.className = "cssbtns btn";
+        arrow.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-b-16.png")';
+    mainBG.appendChild(arrow);
 	    ancestors[4] = document.createElement("Label");
         ancestors[4].class = "editPanel";
         ancestors[4].className = "ancestors";
+        ancestors[4].style.backgroundColor = "#F0F8FF";
 	mainBG.appendChild(ancestors[4]);    
 	
 	var space = document.createElement("Div");
@@ -82,6 +106,10 @@ var mainBG = document.createElement("Div");
         close.style.backgroundImage = 'url("https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/CloseCancelSquare-16.png")';
     mainBG.appendChild(close);
 
+	
+
+	
+	
 var htmlmenu = document.createElement("Div");
     htmlmenu.class = "editPanel";
 	htmlmenu.className = "submenu";
@@ -93,36 +121,42 @@ var htmlmenu = document.createElement("Div");
 	    text.className = "tags";
 		text.style.marginLeft="2px";
 	htmlmenu.appendChild(text);
+	
 	var button = document.createElement("Button");;
 	    button.class = "editPanel";
 	    var txt = document.createTextNode("<button>");
 		button.appendChild(txt);
 	    button.className = "tags";
 	htmlmenu.appendChild(button);
+	
 	var label = document.createElement("Button");;
 	    label.class = "editPanel";
 	    var txt = document.createTextNode("<label>");
 		label.appendChild(txt);
 	    label.className = "tags";
 	htmlmenu.appendChild(label);
+	
 	var div = document.createElement("Button");;
 	    div.class = "editPanel";
 	    var txt = document.createTextNode("<div>");
 		div.appendChild(txt);
 	    div.className = "tags";
 	htmlmenu.appendChild(div);
+	
 	var span = document.createElement("Button");;
 	    span.class = "editPanel";
 	    var txt = document.createTextNode("<span>");
 		span.appendChild(txt);
 	    span.className = "tags";
 	htmlmenu.appendChild(span);
+	
 	var link = document.createElement("Button");;
 	    link.class = "editPanel";
 	    var txt = document.createTextNode("<link>");
 		link.appendChild(txt);
 	    link.className = "tags";
 	htmlmenu.appendChild(link);
+	
 	var input = document.createElement("select");
         input.class = "editPanel";
 	    input.className = "tags";
@@ -180,11 +214,11 @@ var htmlmenu = document.createElement("Div");
 	    input.appendChild(op16);
 	      var op17 = document.createElement("option");
 	          op17.text ="url";
-	    input.appendChild(op17);
-		
+	    input.appendChild(op17);	
 	htmlmenu.appendChild(input);
-	
-	//mainBG.appendChild(htmlmenu);
+
+	 
+	 
 	 
 var cssmenu = document.createElement("Div");
     cssmenu.class = "editPanel";
@@ -295,16 +329,15 @@ var cssmenu = document.createElement("Div");
         move.style.backgroundImage = 'url("https://cdn3.iconfinder.com/data/icons/edition/100/move-16.png")';
 	cssmenu.appendChild(move);
 	
-	
 	var BGcolor = document.createElement("Label");
         BGcolor.class = "editPanel";
 	    BGcolor.className = "cssbtns inputs ";
         BGcolor.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/essentials-volume-6/128/color-wheel-16.png")';
-		var picker = document.createElement("Input");
-		    picker.class ="editPanel";
-			picker.type ="color";
-			picker.className = "color";
-		BGcolor.appendChild(picker);
+		var BGpicker = document.createElement("Input");
+		    BGpicker.class ="editPanel";
+			BGpicker.type ="color";
+			BGpicker.className = "color";
+		BGcolor.appendChild(BGpicker);
 	cssmenu.appendChild(BGcolor);	
 
 	var BGimg = document.createElement("Label");
@@ -418,28 +451,28 @@ var cssmenu = document.createElement("Div");
 	    borderwidth.class = "editPanel";
 	    borderwidth.className = "cssbtns";
     cssmenu.appendChild( borderwidth);
+	
 		var bordercolor = document.createElement("Label");
         bordercolor.class = "editPanel";
 	    bordercolor.className = "cssbtns inputs ";
         bordercolor.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/essentials-volume-6/128/color-wheel-16.png")';
-		var picker = document.createElement("Input");
-		    picker.class ="editPanel";
-			picker.type ="color";
-			picker.className = "color";
-		bordercolor.appendChild(picker);
+		var bpicker = document.createElement("Input");
+		    bpicker.class ="editPanel";
+			bpicker.type ="color";
+			bpicker.className = "color";
+		bordercolor.appendChild(bpicker);
 	cssmenu.appendChild(bordercolor);
-
+		
 	var newtxt = document.createElement("input");
         newtxt.class = "editPanel";
 	    newtxt.className = "cssbtns";
 		newtxt.style.border ="1px solid black";
-	cssmenu.appendChild(newtxt);
+
 	var enter = document.createElement("Button");
         enter.class = "editPanel";
 	    enter.className = "cssbtns btn";
         enter.style.backgroundImage = 'url("https://cdn0.iconfinder.com/data/icons/arrows-of-ways/154/turn-16.png")';
-	cssmenu.appendChild(enter);
-	
+
     var font = document.createElement("select");
         font.class = "editPanel";
 	    font.className = "cssbtns";
@@ -471,7 +504,7 @@ var cssmenu = document.createElement("Div");
 	          op6.text ="Verdana";
 			  op6.style.fontFamily ="Verdana";
 	    font.appendChild(op6);
-	cssmenu.appendChild(font);	
+	
 		var txtsize = document.createElement("select");
         txtsize.class = "editPanel";
 	    txtsize.className = "cssbtns";
@@ -497,52 +530,52 @@ var cssmenu = document.createElement("Div");
 	      var op6 = document.createElement("option");
 	          op6.text ="64";
 	    txtsize.appendChild(op6);
-    cssmenu.appendChild(txtsize);
+
 	var bold = document.createElement("Button");
         bold.class = "editPanel";
 	    bold.className = "cssbtns btn";
         bold.style.backgroundImage = 'url("https://cdn3.iconfinder.com/data/icons/glypho-generic-icons/64/edit-bold-16.png")';
-	cssmenu.appendChild(bold);
+
 	var italic = document.createElement("Button");
         italic.class = "editPanel";
 	    italic.className = "cssbtns btn";
         italic.style.backgroundImage = 'url("https://cdn1.iconfinder.com/data/icons/text-editor-4/1792/italic-16.png")';
-	cssmenu.appendChild(italic);
+	
 	var under = document.createElement("Button");
         under.class = "editPanel";
 	    under.className = "cssbtns btn";
         under.style.backgroundImage = 'url("https://cdn3.iconfinder.com/data/icons/metro-design/512/underlined_font-16.png")';
-	cssmenu.appendChild(under);
+
 	var through = document.createElement("Button");
         through.class = "editPanel";
 	    through.className = "cssbtns btn";
         through.style.backgroundImage = 'url("https://cdn3.iconfinder.com/data/icons/iconano-text-editor/512/171-S-16.png")';
-	cssmenu.appendChild(through);
+
 	var alignLeft = document.createElement("Button");
         alignLeft.class = "editPanel";
 	    alignLeft.className = "cssbtns btn";
         alignLeft.style.backgroundImage = 'url("https://cdn2.iconfinder.com/data/icons/inverticons-stroke-vol-4/32/text_align_left-16.png")';
-	cssmenu.appendChild(alignLeft);
+
 	var alignCenter = document.createElement("Button");
         alignCenter.class = "editPanel";
 	    alignCenter.className = "cssbtns btn";
         alignCenter.style.backgroundImage = 'url("https://cdn2.iconfinder.com/data/icons/inverticons-stroke-vol-4/32/text_align_center-16.png")';
-	cssmenu.appendChild(alignCenter);
+
 	var alignRight = document.createElement("Button");
         alignRight.class = "editPanel";
 	    alignRight.className = "cssbtns btn";
         alignRight.style.backgroundImage = 'url("https://cdn2.iconfinder.com/data/icons/inverticons-stroke-vol-4/32/text_align_right-16.png")';
-	cssmenu.appendChild(alignRight);
+
 	var txtcolor = document.createElement("Label");
         txtcolor.class = "editPanel";
 	    txtcolor.className = "cssbtns inputs ";
         txtcolor.style.backgroundImage = 'url("https://cdn4.iconfinder.com/data/icons/essentials-volume-6/128/color-wheel-16.png")';
-		var picker = document.createElement("Input");
-		    picker.class ="editPanel";
-			picker.type ="color";
-			picker.className = "color";
-		txtcolor.appendChild(picker);
-	cssmenu.appendChild(txtcolor);
+		var txtpicker = document.createElement("Input");
+		    txtpicker.class ="editPanel";
+			txtpicker.type ="color";
+			txtpicker.className = "color";
+		txtcolor.appendChild(txtpicker);
+
 		var letSpacing = document.createElement("select");
         letSpacing.class = "editPanel";
 	    letSpacing.className = "cssbtns";
@@ -568,7 +601,7 @@ var cssmenu = document.createElement("Div");
 	      var op6 = document.createElement("option");
 	          op6.text ="64";
 	    letSpacing.appendChild(op6);
-    cssmenu.appendChild(letSpacing);
+
 		var wordSpacing = document.createElement("select");
         wordSpacing.class = "editPanel";
 	    wordSpacing.className = "cssbtns";
@@ -594,12 +627,17 @@ var cssmenu = document.createElement("Div");
 	      var op6 = document.createElement("option");
 	          op6.text ="64";
 	    wordSpacing.appendChild(op6);
-    cssmenu.appendChild(wordSpacing);
+
+		
+		
+
+
 	 mainBG.appendChild(cssmenu);
 	 document.body.appendChild(mainBG);
+	 dragElement(mainBG);//make it draggable ,
 
 	 
-//////
+//add listeners to  btns and icons
 selector.addEventListener("click",Selector,false);
 document.addEventListener("mousemove",mymoseMove,false);
 close.addEventListener("click",Close,false);
@@ -616,7 +654,7 @@ width.addEventListener("change",Width,false);
 height.addEventListener("change",Height,false);
 position.addEventListener("change",Position,false);
 move.addEventListener("click",Move,false);
-BGcolor.addEventListener("change",BGColor,false);
+BGpicker.addEventListener("change",BGColor,false);
 BGimg.addEventListener("change",BGImg,false);
 border.addEventListener("change",Border,false);
 borderleft.addEventListener("click",BorderLeft,false);
@@ -624,7 +662,7 @@ borderright.addEventListener("click",BorderRight,false);
 bordertop.addEventListener("click",BorderTop,false);
 borderbottom.addEventListener("click",BorderBottom,false);
 borderwidth.addEventListener("change",BorderWidth,false);
-bordercolor.addEventListener("change",BorderColor,false);
+bpicker.addEventListener("change",BorderColor,false);
 newtxt.addEventListener("change",editText,false);
 enter.addEventListener("click",editText,false);
 font.addEventListener("change",Font,false);
@@ -636,37 +674,30 @@ through.addEventListener("click",through,false);
 alignLeft.addEventListener("click",AlignLeft,false);
 alignCenter.addEventListener("click",AlignCenter,false);
 alignRight.addEventListener("click",AlignRight,false);
-txtcolor.addEventListener("change",Txtcolor,false);
+txtpicker.addEventListener("change",Txtcolor,false);
 letSpacing.addEventListener("change",LetSpacing,false);
 wordSpacing.addEventListener("change",WordSpacing,false);
+for(var i=0;i<5;i++)
+	ancestors[i].addEventListener("click",target,false);
+dlt.addEventListener("click",Delete,false);
 
 
 
 
 
 
+//listeners implementation
 
-
-
-
-//////
-var yourTarget;
-var cursorX;
-var cursorY;
-var clicked = false ;
-var borderType;
-
-
-//////
-  function Selector(e){
+function Selector(e){
 	 selector.style.top ="0px";
 	 selector.style.left="120px";
 	 mainBG.appendChild(selector);
 	 clicked = !clicked;
- }
+	 e.preventDefault();
+    }
  
  
- function mymoseMove(e){
+function mymoseMove(e){
      cursorX = e.pageX;
      cursorY = e.pageY;
      var element = document.elementFromPoint(cursorX,cursorY);
@@ -675,292 +706,367 @@ var borderType;
            yourTarget= document.elementFromPoint(cursorX,cursorY);
 		   changeTarget();
 		   document.body.appendChild(selector);
+		   selector.style.cursor= "none";
 	       selector.style.top = cursorY-10+ "px";
            selector.style.left = cursorX-10+ "px";
-	}
-}
+	    }
+    }
 
 
 function changeTarget(){
 	path = [];
-		temp = yourTarget;
-	 var i=0;
-	 while (temp != document && i<5 && temp != selector){
+	temp = yourTarget;
+	var i=0;
+	while (temp != document && i<5 && temp != selector){
 		 path.push(temp);
-		 if(temp.tagName != "HTML" )
-		 var str = temp.tagName + "." +temp.id +"\t";
-	 else
+		 if(temp.tagName != null && temp.tagName != "HTML" ){
+		    var str = temp.tagName;
+            if(temp.className != null && temp.className != "" )
+		     str += "." +temp.className +"\t";
+		    else if(temp.id != null)
+			  str += "#" +temp.id+"\t";
+		    }
+	     else
 		 var str = "";
 		 var txt = document.createTextNode(str);
-	 var child = ancestors[4-i].childNodes ;
-		if(child[0] != null) 
-		 ancestors[4-i].removeChild(child[0]);
+	     var child = ancestors[4-i].childNodes ;
+		 if(child[0] != null) 
+		    ancestors[4-i].removeChild(child[0]);
 		 ancestors[4-i].appendChild(txt);
-	 temp = temp.parentNode;
-		  i++;
-	 }
-	
-}
+	     temp = temp.parentNode;
+		 i++;
+	    }
+
+    if(yourTarget.innerText != ""){ // add text editing icons if needed
+		cssmenu.appendChild(newtxt);
+		cssmenu.appendChild(enter);
+		cssmenu.appendChild(font);
+		cssmenu.appendChild(txtsize);
+		cssmenu.appendChild(bold);
+		cssmenu.appendChild(italic);
+		cssmenu.appendChild(under);
+		cssmenu.appendChild(through);
+		cssmenu.appendChild(alignLeft);
+		cssmenu.appendChild(alignCenter);
+		cssmenu.appendChild(alignRight);
+	    cssmenu.appendChild(txtcolor);	
+	    cssmenu.appendChild(letSpacing);
+		cssmenu.appendChild(wordSpacing);
+        }
+    else{                        //if not needed remove them if they were exists
+        var child = cssmenu.childNodes ;
+        for(var i =13; child[i]!=null ;i++)
+	    cssmenu.removeChild(cssmenu.childNodes[i]); 
+        }	
+    }
 
 
-function Close(){
+function Close(e){
 	mainBG.remove();
-}
+	e.preventDefault();
+    }
 
 
-function Add(){
-	  var child = mainBG.childNodes ;
-for(var i =0; child[i]!=null ;i++)
+function Add(e){
+	var child = mainBG.childNodes ;
+    for(var i =0; child[i]!=null ;i++)
 	if(child[i] == cssmenu)
-     mainBG.removeChild(mainBG.childNodes[i]); 
-	 mainBG.appendChild(htmlmenu);
- }
+      mainBG.removeChild(child[i]); 
+	mainBG.appendChild(htmlmenu);
+	e.preventDefault();
+    }
  
  
-function Text(){
-	 var newElement= document.createElement("text");
-	     newElement.id = "new";
-	     var txt = document.createTextNode("new text");
-	     newElement.appendChild(txt);
-	 yourTarget.appendChild(newElement);
-	 yourTarget = newElement;
-	 changeTarget();
- }
+function Text(e){
+	var newElement= document.createElement("text");
+	    newElement.id = "new";
+	    var txt = document.createTextNode("new text");
+	    newElement.appendChild(txt);
+	yourTarget.appendChild(newElement);
+	yourTarget = newElement;
+	changeTarget();
+	e.preventDefault();
+    }
 
  
-function Button(){
-var newElement = document.createElement("Button");
-	newElement.id = "new";
-	newElement.setAttribute("style","  position: relative;");
-    var txt = document.createTextNode("new button");
-	newElement.appendChild(txt);
-	 yourTarget.appendChild(newElement);
-	 yourTarget = newElement;
-	 changeTarget();
-}
+function Button(e){
+    var newElement = document.createElement("Button");
+	    newElement.id = "new";
+	    newElement.setAttribute("style","  position: relative;");
+        var txt = document.createTextNode("new button");
+	    newElement.appendChild(txt);
+	yourTarget.appendChild(newElement);
+	yourTarget = newElement;
+	changeTarget();
+	e.preventDefault();
+    }
 
 
-function Label(){
+function Label(e){
 	var newElement = document.createElement("Label");
-	newElement.id = "new";
-	newElement.setAttribute("style","  position: relative;");
-    var txt = document.createTextNode("new Label");
-	newElement.appendChild(txt);
-	 yourTarget.appendChild(newElement);
-     yourTarget = newElement;
-	 changeTarget();
-}
+	    newElement.id = "new";
+	    newElement.setAttribute("style","  position: relative;");
+        var txt = document.createTextNode("new Label");
+	    newElement.appendChild(txt);
+	yourTarget.appendChild(newElement);
+    yourTarget = newElement;
+	changeTarget();
+	e.preventDefault();
+    }
 
-function Div(){
+
+function Div(e){
 	var newElement = document.createElement("Div");
-	newElement.id = "new";
-    var txt= document.createTextNode("new Div");
-	newElement.appendChild(txt);
-	 yourTarget.appendChild(newElement);
-	 yourTarget = newElement;
-	 changeTarget();
-}
+	    newElement.id = "new";
+        var txt= document.createTextNode("new Div");
+	    newElement.appendChild(txt);
+	yourTarget.appendChild(newElement);
+	yourTarget = newElement;
+	changeTarget();
+	e.preventDefault();
+    }
 
 
-function Span(){
+function Span(e){
 	var newElement = document.createElement("Span");
-	newElement.id = "new";
-    var txt = document.createTextNode("new span");
-	newElement.appendChild(txt);
-	 yourTarget.appendChild(newElement);
-	 yourTarget = newElement;
-	 changeTarget();
-}
+	    newElement.id = "new";
+        var txt = document.createTextNode("new span");
+	    newElement.appendChild(txt);
+	yourTarget.appendChild(newElement);
+	yourTarget = newElement;
+	changeTarget();
+	e.preventDefault();
+    }
 
 
-function Link(){
+function Link(e){
 	var newElement = document.createElement("A");
-	newElement.id = "new";
-    var txt = document.createTextNode("new link");
-	newElement.appendChild(txt);
-	 yourTarget.appendChild(newElement);
-	 yourTarget = newElement;
-	 changeTarget();
-}
+	    newElement.id = "new";
+        var txt = document.createTextNode("new link");
+	    newElement.appendChild(txt);
+	yourTarget.appendChild(newElement);
+	yourTarget = newElement;
+	changeTarget();
+	e.preventDefault();
+    }
 
 
 function Input(e){
-var selected = e.target.selectedIndex;
-var newElement = document.createElement("Input");
-	newElement.id = "new";
-	newElement.setAttribute("style","  position: relative;");
-	newElement.type = input[selected].text;	
-yourTarget.appendChild(newElement);
+    var selected = e.target.selectedIndex;
+    var newElement = document.createElement("Input");
+	    newElement.id = "new";
+	    newElement.setAttribute("style","  position: relative;");
+	    newElement.type = input[selected].text;	
+    yourTarget.appendChild(newElement);
 	yourTarget = newElement;
 	changeTarget();
-}
+	e.preventDefault();
+    }
 
 
-function Edit(){
-	  var child = mainBG.childNodes ;
-for(var i =0; child[i]!=null ;i++)
+function Edit(e){
+	var child = mainBG.childNodes ;
+    for(var i =0; child[i]!=null ;i++)
 	if(child[i] == htmlmenu)
-     mainBG.removeChild(mainBG.childNodes[i]); 
-	 mainBG.appendChild(cssmenu);
- }
+        mainBG.removeChild(child[i]); 
+	mainBG.appendChild(cssmenu);
+	e.preventDefault();
+    }
 
+ 
 function Width(e){
-
-var selected = e.target.selectedIndex;
-yourTarget.style.width = width[selected].text;
-        
-}
+    width.style.backgroundImage = 'none';
+    var selected = e.target.selectedIndex;
+    yourTarget.style.width += width[selected].text+"px";  
+    e.preventDefault(); 
+    }
 
 
 function Height(e){
-var child = e.target.childNodes;
-var selected = e.target.selectedIndex;
-yourTarget.style.height = height[selected].text;
-        
-}	
+    height.style.backgroundImage = 'none';
+    var selected = e.target.selectedIndex;
+    yourTarget.style.height += height[selected].text+"px";
+    e.preventDefault();   
+    }	
 
 
 function Position(e){
-
-var selected = e.target.selectedIndex;
-yourTarget.style.position = position[selected].text;
-}
-
-
-function Move(){
-	
-dragElement(yourTarget);
-}
+    position.style.backgroundImage = 'none';
+    var selected = e.target.selectedIndex;
+    yourTarget.style.position = position[selected].text;
+    e.preventDefault();
+    }
 
 
-function BGColor(){
-	 yourTarget.style.backgroundColor = this.value; 
- }
+function Move(e){
+    dragElement(yourTarget);
+    e.preventDefault();
+    }
+
+
+function BGColor(e){
+	yourTarget.style.backgroundColor = this.value; 
+	e.preventDefault();
+    }
  
-function BGImg(){
-
- yourTarget.style.backgroundImage = this.value; 
-
-}
+function BGImg(e){
+    yourTarget.style.backgroundImage = this.value; 
+    e.preventDefault();
+    }
 
 
 function Border(e){
-
-var selected = e.target.selectedIndex;
-borderType = border[selected].text;
-yourTarget.style.borderStyle = borderType;
-
-}
-
+    var selected = e.target.selectedIndex;
+    borderType = border[selected].text;
+    yourTarget.style.borderStyle = borderType;
+    e.preventDefault();
+    }
 
 
-
-function Txtcolor(){
-	 yourTarget.style.color = this.value; 
+function Txtcolor(e){
+	yourTarget.style.color = this.value; 
+	e.preventDefault();
  }
 
-function BorderLeft(){
+ 
+function BorderLeft(e){
 	yourTarget.style.borderLeft = borderType;
-	
-}
+	e.preventDefault();
+    }
 
 
-function BorderRight(){
+function BorderRight(e){
 	yourTarget.style.borderRight= borderType;
-	
-}
+	e.preventDefault();
+    }
 
-function BorderTop(){
+function BorderTop(e){
 	yourTarget.style.borderTop = borderType;
-}
+	e.preventDefault();
+    }
 
 
-function BorderBottom(){
-	yourTarget.style.borderBottom = borderType;
-	
-}
+function BorderBottom(e){
+	yourTarget.style.borderBottom = borderType;  	
+    }
+ 
  
 function BorderWidth(e){
 	var selected = e.target.selectedIndex;
-	yourTarget.style.position = borderWidth[selected].text;	
-}
+	yourTarget.style.position = borderwidth[selected].text +"px";	
+	e.preventDefault();
+    }
 
-function BorderColor(){
-	 yourTarget.style.borderColor = this.value; 
- }
+	
+function BorderColor(e){
+	yourTarget.style.borderColor = this.value; 
+	e.preventDefault();
+    }
 
-function editText(){
-
+	
+function editText(e){
 	yourTarget.innerHTML =newtxt.value;
-	newText.value ="";
-}
+	newtxt.value ="";
+	e.preventDefault();
+    }
 
 
 function Font(e){
-	
+	font.style.backgroundImage = 'none';
 	var selected = e.target.selectedIndex;
 	yourTarget.style.fontFamily = font[selected].text;
-}
+	e.preventDefault();
+    }
 
 
 function textsize(e){
-	
+	txtsize.style.backgroundImage = 'none';
 	var selected = e.target.selectedIndex;
-	yourTarget.style.fontSize = txtsize[selected].text;
-}
+	yourTarget.style.fontSize = txtsize[selected].text+"px";
+	e.preventDefault();
+    }
 
+	
 function Bold(e){
-	 yourTarget.style.fontWeight = 'bold';
-}
+	yourTarget.style.fontWeight = 'bold';
+	e.preventDefault();
+    }
 
 
 function Italic(e){
-	 yourTarget.style.fontStyle="italic";
+	yourTarget.style.fontStyle="italic";
+	e.preventDefault();
+    }
 
-}
 
 function Under(e){
+	yourTarget.style.textDecoration="underline";
+    e.preventDefault();
+    }
 
-	 yourTarget.style.textDecoration="underline";
-	 
-}
+	
 function Over(e){
+	yourTarget.style.textDecoration="overline";
+    e.preventDefault();
+    }
 
-	 yourTarget.style.textDecoration="overline";
-
-}
-
-function AlignRight(){
-	 yourTarget.style.textAlign = "right";
 	
-}
+function AlignRight(e){
+	yourTarget.style.textAlign = "right";
+	e.preventDefault();
+    }
 
-function AlignLeft(){
-	 yourTarget.style.textAlign = "left";
-}
+	
+function AlignLeft(e){
+	yourTarget.style.textAlign = "left";
+	e.preventDefault();
+    }
 
-function AlignCenter(){
-	 yourTarget.style.textAlign = "center";
-}
+	
+function AlignCenter(e){
+	yourTarget.style.textAlign = "center";
+	e.preventDefault();
+    }
 
+	
 function LetSpacing (e){
+	letSpacing.style.backgroundImage = 'none';
+    var selected = e.target.selectedIndex;
+	yourTarget.style.letterSpacing = letSpacing[selected].text+"px";
+	e.preventDefault();
+    }
+
 	
-		var selected = e.target.selectedIndex;
-	 yourTarget.style.letterSpacing = letSpacing[selected].text+"px";
-
-}
-
 function WordSpacing (e){
+	wordSpacing.style.backgroundImage = 'none';
 	var selected = e.target.selectedIndex;
-	 yourTarget.style.wordSpacing = wordSpacing[selected].text+"px";
-
+	yourTarget.style.wordSpacing = wordSpacing[selected].text+"px";
+    e.preventDefault();
 }
  
  
+function target(e){
+    for(var i=0; i<5; i++){
+	  if(e.target == ancestors[i])
+	    break;
+    }
+    yourTarget = path[4-i];
+    changeTarget(path[i]);	
+    e.preventDefault();
+    }
  
- function dragElement(elmnt) {
-	
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+ 
+function Delete(e){
+	var temp = yourTarget;
+	yourTarget = yourTarget.parentNode;
+	temp.remove();
+	changeTarget();
+	e.preventDefault();
+    }
+ 
+ 
+function dragElement(elmnt) {//https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_draggable
+	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id + "header")) {
     /* if present, the header is where you move the DIV from:*/
     document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
@@ -1000,5 +1106,6 @@ function WordSpacing (e){
 	
 }
 
+ 
  
  }	
