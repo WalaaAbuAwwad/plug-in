@@ -3,7 +3,7 @@
 	 position: fixed;
 	 bottom: 100px; 
 	 left: 50px;
-	 width: 990px;
+	 width: 985px;
 	 height: 70px;
 	 z-index: 1000;
 	 border-top: 1px solid black;
@@ -53,7 +53,7 @@
 	position:relative;
     margin : 2px;
 	z-index: 1000;
-	width:35px;
+	width:45px;
 	height: 10px;
 	display: inline-block;
 }
@@ -93,16 +93,16 @@
     -ms-user-select: none;
     user-select: none;
     background-image: none;
-    border: 1px solid transparent;
+    border: 1px solid black;
     border-radius: 4px;
-	
+	z-index: 1000;
  }
  .cssbtns{
 	color: #333;
     background-color: #fff;
     border-color: #ccc;
 	display: inline-block;
-    padding: 0px;
+    padding: 1.5px 3px;
     margin:2px;
     font-size: 14px;
     font-weight: 400;
@@ -117,8 +117,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
+	z-index: 1000;
  }
  select {
      
