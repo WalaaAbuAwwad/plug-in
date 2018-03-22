@@ -879,8 +879,7 @@ bordertop.addEventListener("click",BorderTop,false);
 borderbottom.addEventListener("click",BorderBottom,false);
 borderwidth.addEventListener("change",BorderWidth,false);
 bpicker.addEventListener("change",BorderColor,false);
-newtxt.addEventListener("change",editText,false);
-//enter.addEventListener("cl",editText,false);
+textArea.addEventListener("keyup",editText,false);
 font.addEventListener("change",Font,false);
 txtsize.addEventListener("change",textsize,false);
 bold.addEventListener("click",Bold,false);
@@ -972,16 +971,14 @@ function changeTarget(){
 	var p = document.createElement("P");
 	 var txt = document.createTextNode(yourTarget.innerText);
 	 p.appendChild(txt);
-	 console.log(p.innerText);
-	textArea.appendChild(p);
+	textArea.appendChild(txt);
 	}
 	else {
 		textArea.removeChild(textArea.childNodes[0]);
 			var p = document.createElement("P");
 	 var txt = document.createTextNode(yourTarget.innerText);
 	 p.appendChild(txt);
-	 console.log(p.innerText);
-	textArea.appendChild(p);
+	textArea.appendChild(txt);
 	}
 		cssmenu.appendChild(font);
 		cssmenu.appendChild(txtsize);
@@ -1199,6 +1196,7 @@ function Border(e){
 
 function Txtcolor(e){
 	yourTarget.style.color = this.value; 
+	textArea.style.color = this.value; 
 	e.preventDefault();
  }
 
@@ -1241,8 +1239,9 @@ function BorderColor(e){
 	
 function editText(e){
 
-	yourTarget.innerHTML = newtxt.value;
-	newtxt.value ="";
+    textArea.setAttribute('contenteditable', 'true');
+     console.log(textArea.innerText);
+	yourTarget.innerText = textArea.innerText;
 	e.preventDefault();
     }
 
@@ -1251,6 +1250,7 @@ function Font(e){
 	font.style.backgroundImage = 'none';
 	var selected = e.target.selectedIndex;
 	yourTarget.style.fontFamily = font[selected].text;
+	textArea.style.fontFamily = font[selected].text;
 	e.preventDefault();
     }
 
@@ -1259,48 +1259,56 @@ function textsize(e){
 	txtsize.style.backgroundImage = 'none';
 	var selected = e.target.selectedIndex;
 	yourTarget.style.fontSize = txtsize[selected].text+"px";
+	textArea.style.fontSize = txtsize[selected].text+"px";
 	e.preventDefault();
     }
 
 	
 function Bold(e){
 	yourTarget.style.fontWeight = 'bold';
+	textArea.style.fontWeight = 'bold';
 	e.preventDefault();
     }
 
 
 function Italic(e){
 	yourTarget.style.fontStyle="italic";
+	textArea.style.fontStyle="italic";
 	e.preventDefault();
     }
 
 
 function Under(e){
 	yourTarget.style.textDecoration="underline";
+	textArea.style.textDecoration="underline";
     e.preventDefault();
     }
 
 	
 function Over(e){
 	yourTarget.style.textDecoration="overline";
+	textArea.style.textDecoration="overline";
     e.preventDefault();
     }
 
 	
 function AlignRight(e){
 	yourTarget.style.textAlign = "right";
+	textArea.style.textAlign = "right";
 	e.preventDefault();
     }
 
 	
 function AlignLeft(e){
 	yourTarget.style.textAlign = "left";
+	textArea.style.textAlign = "left";
 	e.preventDefault();
     }
 
 	
 function AlignCenter(e){
 	yourTarget.style.textAlign = "center";
+	textArea.style.textAlign = "center";
 	e.preventDefault();
     }
 
@@ -1309,6 +1317,7 @@ function LetSpacing (e){
 	letSpacing.style.backgroundImage = 'none';
     var selected = e.target.selectedIndex;
 	yourTarget.style.letterSpacing = letSpacing[selected].text+"px";
+	textArea.style.letterSpacing = letSpacing[selected].text+"px";
 	e.preventDefault();
     }
 
@@ -1317,6 +1326,7 @@ function WordSpacing (e){
 	wordSpacing.style.backgroundImage = 'none';
 	var selected = e.target.selectedIndex;
 	yourTarget.style.wordSpacing = wordSpacing[selected].text+"px";
+	textArea.style.wordSpacing = wordSpacing[selected].text+"px";
     e.preventDefault();
 }
  
