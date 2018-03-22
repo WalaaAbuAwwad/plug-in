@@ -1,14 +1,15 @@
 
 #BG{
 	 position: fixed;
-	 bottom: 100px; 
+	 top: 50px; 
 	 left: 50px;
-	 width: 985px;
-	 height: 123px;
+	 width: 990px;
+	 height: auto;
 	 z-index: 1000;
 	 border: 1px solid black;
 	 border-bottom: none;
 	 background-color: white; 
+	 overflow-x: auto;
 }
 
 
@@ -19,6 +20,7 @@
 	 z-index: 1000;
 	 background-color: white; 
 }
+
 .path{
 	 position: relative;
 	 width: 985px;
@@ -28,9 +30,15 @@
 	overflow-x: auto;
     overflow-y: hidden;
 	white-space:nowrap;
- 
 }
-
+.txt{
+	 position: relative;
+	 z-index: 1000;
+	 background-color: white; 
+	overflow-x: auto;
+    overflow-y: hidden;
+	white-space:nowrap;
+}
 .icon{
 	position:relative;
     margin : 2px;
@@ -188,4 +196,11 @@ top: -1000px;
 .path::-webkit-scrollbar-thumb
 {
 	background-color: #000000;
+}
+
+
+.center {
+    margin-top:2px;
+	margin-left: 380px;
+
 }

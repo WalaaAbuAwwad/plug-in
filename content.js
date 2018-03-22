@@ -477,7 +477,7 @@ var cssmenu = document.createElement("Div");
 		bordercolor.appendChild(bpicker);
 	cssmenu.appendChild(bordercolor);
 		
-	var newtxt = document.createElement("input");
+	var newtxt = document.createElement("TEXTAREA");
         newtxt.class = "editPanel";
 	    newtxt.className = "cssbtns";
 		newtxt.style.border ="1px solid black";
@@ -839,7 +839,14 @@ var BSmenu = document.createElement("Div");
 	    col_xl_.appendChild(op4);
 		
 	mainBG.appendChild(cssmenu);
-	// document.body.appendChild(mainBG);
+	
+	var textArea = document.createElement("Div");//append all elements to 
+    textArea.class = "editPanel";
+	textArea.className = "fr-element fr-view center";
+    textArea.setAttribute('contenteditable', 'true');
+    textArea.setAttribute('aria-disabled', 'false');
+    textArea.setAttribute('spellcheck', 'true');
+	textArea.style.width ="370px";
 	 dragElement(main);//make it draggable ,
 	 main.appendChild(mainBG);
 	 main.appendChild(path);
@@ -873,7 +880,7 @@ borderbottom.addEventListener("click",BorderBottom,false);
 borderwidth.addEventListener("change",BorderWidth,false);
 bpicker.addEventListener("change",BorderColor,false);
 newtxt.addEventListener("change",editText,false);
-enter.addEventListener("click",editText,false);
+//enter.addEventListener("cl",editText,false);
 font.addEventListener("change",Font,false);
 txtsize.addEventListener("change",textsize,false);
 bold.addEventListener("click",Bold,false);
@@ -932,7 +939,7 @@ function mymoseMove(e){
 
 
 function changeTarget(){
-	path = [];
+	Path = [];
 	temp = yourTarget;
 	var i=0;
 	
@@ -944,7 +951,7 @@ function changeTarget(){
 	
 	
 	while (temp != document && i<5 && temp != selector){
-		 path.push(temp);
+		 Path.push(temp);
 		 if(temp.tagName != null && temp.tagName != "HTML" ){
 		    var str = temp.tagName;
             if(temp.className != null && temp.className != "" )
@@ -961,8 +968,21 @@ function changeTarget(){
 	    }
 
     if(yourTarget.innerText != ""){ // add text editing icons if needed
-		cssmenu.appendChild(newtxt);
-		cssmenu.appendChild(enter);
+	if(textArea.childNodes[0] == null){
+	var p = document.createElement("P");
+	 var txt = document.createTextNode(yourTarget.innerText);
+	 p.appendChild(txt);
+	 console.log(p.innerText);
+	textArea.appendChild(p);
+	}
+	else {
+		textArea.removeChild(textArea.childNodes[0]);
+			var p = document.createElement("P");
+	 var txt = document.createTextNode(yourTarget.innerText);
+	 p.appendChild(txt);
+	 console.log(p.innerText);
+	textArea.appendChild(p);
+	}
 		cssmenu.appendChild(font);
 		cssmenu.appendChild(txtsize);
 		cssmenu.appendChild(bold);
@@ -975,11 +995,20 @@ function changeTarget(){
 	    cssmenu.appendChild(txtcolor);	
 	    cssmenu.appendChild(letSpacing);
 		cssmenu.appendChild(wordSpacing);
+		var child = main.childNodes;
+		if(child[1] != null)
+	main.removeChild(child[1]);
+	main.appendChild(textArea);
+	main.appendChild(path);
         }
     else{                        //if not needed remove them if they were exists
         var ch = cssmenu.childNodes ;
         for(var i =13; ch[i]!=null ;i++)
 	    cssmenu.removeChild(ch[i]); 
+		var child = main.childNodes;
+	   if(child[1] != null)
+	    main.removeChild(child[1]);
+		main.appendChild(path);
         }
 		
 	var c = BSmenu.childNodes ;
@@ -1211,7 +1240,8 @@ function BorderColor(e){
 
 	
 function editText(e){
-	yourTarget.innerHTML =newtxt.value;
+
+	yourTarget.innerHTML = newtxt.value;
 	newtxt.value ="";
 	e.preventDefault();
     }
